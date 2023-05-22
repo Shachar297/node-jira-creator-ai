@@ -1,6 +1,7 @@
 import express, { Response, Request } from "express";
 import JiraModule from "../src/Jira";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { IncomingHttpRequest } from "../models/IncomingHttpRequest";
 
 export default class RoutesManager {
   public router: express.Router;
@@ -19,6 +20,9 @@ export default class RoutesManager {
     });
 
     this.router.post("/", (req: Request, res: Response) => {
+      const 
+        {apiVersion, kind, metadata, spec} = req.body,
+        requestBody = new IncomingHttpRequest(apiVersion, kind, metadata, spec);
 
       jiraModule
         .createJiraIssue(req.body)
