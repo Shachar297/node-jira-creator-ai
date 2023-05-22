@@ -23,8 +23,7 @@ export default class RoutesManager {
       jiraModule
         .createJiraIssue(req.body)
         .then((data: any) => {
-            console.log(data)
-          res.send(data);
+          res.send(data.data);
         })
         .catch((err: any) => {
             console.log(err)
