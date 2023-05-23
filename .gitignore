@@ -1,3 +1,6 @@
 .history
 node_modules/
 .env
+jira.sh
+data.json
+dist/
