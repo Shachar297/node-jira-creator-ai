@@ -22,7 +22,7 @@ export default class JiraModule {
           id: 10126,
         },
         summary: `${data.metadata.name } [${data.metadata.namespace}]`,
-        labels: [data.metadata.labels.app],
+        labels: [data.metadata.namespace],
         project: {
           key: "IN",
         },

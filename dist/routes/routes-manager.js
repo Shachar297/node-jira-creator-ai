@@ -14,6 +14,7 @@ class RoutesManager {
     initRoutes() {
         const jiraModule = new Jira_1.default();
         this.router.get("/healthcheck/", (req, res) => {
+            console.log(`Received health check request.`);
             res.json({
                 status: 200,
                 message: `Fire !!`,
@@ -24,6 +25,7 @@ class RoutesManager {
             jiraModule
                 .createJiraIssue(requestBody)
                 .then((data) => {
+                console.log(`Received Jira issue creation request`);
                 res.send(data.data);
             })
                 .catch((err) => {

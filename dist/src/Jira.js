@@ -13,7 +13,6 @@ class JiraModule {
         return (0, executors_1.executePostAPI)(`${process.env.JIRA_BASE_URL}/issue`, data);
     }
     setJiraIssueData(data) {
-        console.log(data, "-------------------");
         const issue = new Issue_1.default(data.summary);
         const config = {
             fields: {
@@ -21,7 +20,7 @@ class JiraModule {
                     id: 10126,
                 },
                 summary: `${data.metadata.name} [${data.metadata.namespace}]`,
-                labels: [data.metadata.labels.app],
+                labels: [data.metadata.namespace],
                 project: {
                     key: "IN",
                 },
