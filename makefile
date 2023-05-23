@@ -3,3 +3,10 @@ docker:
 
 serve:
 	npm run serve
+
+ngrok:
+	ngrok http 3005
+
+serve_local: serve ngrok
+
+serve_docker: docker ngrok
