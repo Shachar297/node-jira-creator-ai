@@ -20,17 +20,16 @@ export default class RoutesManager {
     });
 
     this.router.post("/", (req: Request, res: Response) => {
-      const 
-        {apiVersion, kind, metadata, spec} = req.body,
+      const { apiVersion, kind, metadata, spec } = req.body,
         requestBody = new IncomingHttpRequest(apiVersion, kind, metadata, spec);
 
       jiraModule
-        .createJiraIssue(req.body)
+        .createJiraIssue(requestBody)
         .then((data: any) => {
           res.send(data.data);
         })
         .catch((err: any) => {
-            console.log(err)
+          console.log(err.errorMessages, "????");
           res.send(err);
         });
     });

@@ -1,0 +1,20 @@
+{
+    "apiVersion": "v1",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "some-cluster-event",
+        "namespace": "some-namespace",
+        "labels": {
+            "app": "some-app-label"
+        }
+    },
+    "spec": {
+        "type": "Normal",
+        "reason": "SuccessfulDeployment",
+        "message": "Deployment was successfully completed.",
+        "source": {
+            "component": "kubectl",
+            "host": "localhost:8000"
+        }
+    }
+}

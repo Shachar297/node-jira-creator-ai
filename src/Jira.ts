@@ -1,13 +1,14 @@
 import { executeGetAPI, executePostAPI } from "./executors";
 import JiraIssue from "../models/Issue";
 import { IssueType } from "../models/IssueType";
+import {IncomingHttpRequest} from "../models/IncomingHttpRequest"
 
 require("dotenv").config();
 
 export default class JiraModule {
   public constructor() {}
 
-  public createJiraIssue(data: any) {
+  public createJiraIssue(data: IncomingHttpRequest) {
     data = this.setJiraIssueData(data);
     return executePostAPI(`${process.env.JIRA_BASE_URL}/issue`, data);
   }
@@ -20,10 +21,26 @@ export default class JiraModule {
         issuetype: {
           id: 10126,
         },
-        summary: data.summary,
+        summary: `${data.metadata.name } [${data.metadata.namespace}]`,
+        labels: [data.metadata.labels.app],
         project: {
           key: "IN",
         },
+        customfield_10097: {
+          version: 1,
+          type: "doc",
+          content: [
+            {
+              type: "paragraph",
+              content : [
+                {
+                  text: `${JSON.stringify(data.spec)}`,
+                  type: "text"
+                }
+              ]
+            }
+          ]
+        }
       },
     };
     return config;

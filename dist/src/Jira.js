@@ -20,10 +20,26 @@ class JiraModule {
                 issuetype: {
                     id: 10126,
                 },
-                summary: data.summary,
+                summary: `${data.metadata.name} [${data.metadata.namespace}]`,
+                labels: [data.metadata.labels.app],
                 project: {
                     key: "IN",
                 },
+                customfield_10097: {
+                    version: 1,
+                    type: "doc",
+                    content: [
+                        {
+                            type: "paragraph",
+                            content: [
+                                {
+                                    text: `${JSON.stringify(data.spec)}`,
+                                    type: "text"
+                                }
+                            ]
+                        }
+                    ]
+                }
             },
         };
         return config;
