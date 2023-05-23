@@ -6,7 +6,7 @@ export class IncomingHttpRequest{
     public kind: string;
     public metadata: any;
     public spec: any;
-    
+    public object?: any
     public constructor(apiVersion: string, kind: string, metadata: any, spec: any) {
         this.apiVersion = apiVersion;
         this.kind = kind;

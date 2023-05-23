@@ -29,7 +29,7 @@ class RoutesManager {
                 res.send(data.data);
             })
                 .catch((err) => {
-                console.log(err.errorMessages, "????");
+                console.log(err, "????");
                 res.send(err);
             });
         });

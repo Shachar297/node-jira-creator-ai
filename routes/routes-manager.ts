@@ -31,7 +31,7 @@ export default class RoutesManager {
           res.send(data.data);
         })
         .catch((err: any) => {
-          console.log(err.errorMessages, "????");
+          console.log(err, "????");
           res.send(err);
         });
     });

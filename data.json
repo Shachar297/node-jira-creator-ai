@@ -1,20 +1,29 @@
 {
-    "apiVersion": "v1",
-    "kind": "Deployment",
+    "apiVersion": "core.k8sgpt.ai/v1alpha1",
+    "kind": "Result",
     "metadata": {
-        "name": "some-cluster-event",
-        "namespace": "some-namespace",
-        "labels": {
-            "app": "some-app-label"
-        }
+        "name": "kubectlerrorpullimagefromhub",
+        "namespace": "kube-system",
+        "creationTimestamp": "2023-05-17T17:51:49Z"
     },
     "spec": {
-        "type": "Normal",
-        "reason": "SuccessfulDeployment",
-        "message": "Deployment was successfully completed.",
-        "source": {
-            "component": "kubectl",
-            "host": "localhost:8000"
-        }
+        "kind": "Pod",
+        "name": "kube-system/my-test-jql-search",
+        "details": "The pod named \"kube-scheduler\" does not have any endpoints associated with it. This may be caused by the absence of a label component=kube-scheduler in the pods that the service is supposed to be routing traffic to.\n\nTo fix this issue, ensure that all pods associated with the \"kube-scheduler\" service have the label \"component=kube-scheduler\" added. This will allow the service to correctly route traffic to the pods.",
+        "error": [
+            {
+                "sensitive": [
+                    {
+                        "masked": "I0RwIUdZdSEn",
+                        "unmasked": "component"
+                    },
+                    {
+                        "masked": "KS0iYUpzK24jdidKWSw=",
+                        "unmasked": "kube-scheduler"
+                    }
+                ],
+                "text": "Service has no endpoints, expected label component=kube-scheduler"
+            }
+        ]
     }
 }
