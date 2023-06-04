@@ -9,14 +9,14 @@ export default class JiraModule {
   public constructor() {}
 
   public createJiraIssue(data: IncomingHttpRequest) {
+    console.log("-------------------->", data.raw_object , "<----------------------------------------------------------------")
     return new Promise((resolve, reject) => {
       return this.isJiraTicketExistsBySummary(data)
         .then((res: any) => {
           if (!res) {
             data = this.setJiraIssueData(data);
             resolve(executePostAPI(`${process.env.JIRA_BASE_URL}/issue`, data));
-          }else 
-          {
+          } else {
             console.log({
               dataMessage:
                 "issue can not be created, it may has been created already",
@@ -35,11 +35,10 @@ export default class JiraModule {
   }
 
   public isJiraTicketExistsBySummary(data: IncomingHttpRequest) {
-    
     return new Promise((resolve, reject) => {
       let query = `project = ${process.env.JIRA_PROJECT_KEY} and (summary ~ "${
-          data.object.spec.kind
-        }" and  summary ~ "${data.object.spec.name.split("/")[1]}")`,
+          data.raw_object.spec.kind
+        }" and  summary ~ "${data.raw_object.spec.name.split("/")[1]}")`,
         queryData: any = {
           expand: [""],
           fields: ["summary"],
@@ -60,20 +59,22 @@ export default class JiraModule {
   }
 
   private setJiraIssueData(data: any): any {
-    console.log(data)
+    console.log(data);
     const issue = new JiraIssue(data.summary);
     const config = {
       fields: {
         issuetype: {
           id: 10004,
         },
-        summary: `${data.object.spec.kind} - ${data.object.spec.name.split("/")[1]}`,
-        labels: [data.object.metadata.namespace],
+        summary: `${data.raw_object.spec.kind} - ${
+          data.raw_object.spec.name.split("/")[1]
+        }`,
+        labels: [data.raw_object.metadata.namespace],
         project: {
           key: "DOR",
         },
-        customfield_10112: `${data.object.metadata.creationTimestamp}`, // timestamp,
-        customfield_10111: data.object.metadata.namespace, // namespace
+        customfield_10112: `${data.raw_object.metadata.creationTimestamp}`, // timestamp,
+        customfield_10111: data.raw_object.metadata.namespace, // namespace
         customfield_10113: {
           version: 1,
           type: "doc",
@@ -83,7 +84,7 @@ export default class JiraModule {
               content: [
                 {
                   type: "text",
-                  text: data.object.spec.details,
+                  text: data.raw_object.spec.details,
                 },
               ],
             },
@@ -97,7 +98,7 @@ export default class JiraModule {
               type: "codeBlock",
               content: [
                 {
-                  text: `${JSON.stringify(data.object.spec, null, 4)}`,
+                  text: `${JSON.stringify(data.raw_object.spec, null, 4)}`,
                   type: "text",
                 },
               ],

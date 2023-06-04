@@ -21,9 +21,9 @@ export default class RoutesManager {
     });
 
     this.router.post("/", (req: Request, res: Response) => {
-      const { apiVersion, kind, metadata, spec } = req.body,
-        requestBody = new IncomingHttpRequest(apiVersion, kind, metadata, spec);
-
+      const raw_object= req.body.raw_object 
+        const requestBody = new IncomingHttpRequest(raw_object);
+      console.log(req.body);
       jiraModule
         .createJiraIssue(requestBody)
         .then((data: any) => {
